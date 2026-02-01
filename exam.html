@@ -3,73 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>አይሲቲ ፈተና</title>
+    <title>የአይሲቲ ፈተና - መምህር አብዱሰላም</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        body { font-family: sans-serif; background-color: #f4f4f4; text-align: center; padding: 20px; }
-        .exam-card { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        input, button { width: 90%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
-        button { background: #1e3c72; color: white; cursor: pointer; font-weight: bold; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #eef2f3; padding: 20px; color: #333; }
+        .exam-container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .q-box { background: #f9f9f9; padding: 15px; margin-bottom: 15px; border-left: 5px solid #1e3c72; border-radius: 5px; text-align: left; }
+        button { width: 100%; padding: 15px; background: #1e3c72; color: white; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; }
         .hidden { display: none; }
-        .question { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+        input[type="radio"] { margin-right: 10px; }
     </style>
 </head>
 <body>
 
-<div class="exam-card">
-    <div id="start-page">
-        <h2>እንኳን ደህና መጡ!</h2>
-        <input type="text" id="sName" placeholder="ሙሉ ስምዎን ያስገቡ">
-        <button onclick="start()">ፈተናውን ጀምር</button>
+<div class="exam-container">
+    <div id="start-div">
+        <h2 style="color:#1e3c72;">የአይሲቲ አጠቃላይ ፈተና</h2>
+        <p>እባክዎን ስምዎን ያስገቡና ፈተናውን ይጀምሩ።</p>
+        <input type="text" id="student-name" placeholder="ሙሉ ስም" style="width:95%; padding:12px; margin-bottom:20px;">
+        <button onclick="startExam()">ፈተናውን ጀምር</button>
     </div>
 
-    <div id="quiz-page" class="hidden">
-        <div class="question">
-            <p>1. የኮምፒውተር አእምሮ የሚባለው የቱ ነው?</p>
-            <input type="radio" name="q1" value="1"> CPU <br>
-            <input type="radio" name="q1" value="0"> RAM
+    <div id="quiz-div" class="hidden">
+        <div id="questions">
+            <div class="q-box"><p>1. የኮምፒውተር ቁሳቁሶች (Physical parts) ምን ይባላሉ?</p>
+                <input type="radio" name="q1" value="1"> Hardware <br> <input type="radio" name="q1" value="0"> Software</div>
+            <div class="q-box"><p>2. መረጃን ለጊዜው የሚይዝ የማስታወሻ ክፍል?</p>
+                <input type="radio" name="q2" value="1"> RAM <br> <input type="radio" name="q2" value="0"> Hard Disk</div>
+            <div class="q-box"><p>3. የኢንተርኔት አባት ተብሎ የሚታወቀው?</p>
+                <input type="radio" name="q3" value="1"> Vint Cerf <br> <input type="radio" name="q3" value="0"> Bill Gates</div>
+            <div class="q-box"><p>4. የፋይል መጠን መለኪያ ትንሹ የቱ ነው?</p>
+                <input type="radio" name="q4" value="1"> Bit <br> <input type="radio" name="q4" value="0"> Byte</div>
+            <div class="q-box"><p>5. 'WWW' ሙሉ ትርጉሙ ምንድነው?</p>
+                <input type="radio" name="q5" value="1"> World Wide Web <br> <input type="radio" name="q5" value="0"> World Wide Word</div>
+            <div class="q-box"><p>6. የኮምፒውተር አእምሮ የሚባለው?</p>
+                <input type="radio" name="q6" value="1"> CPU <br> <input type="radio" name="q6" value="0"> Monitor</div>
+            <div class="q-box"><p>7. መረጃን ወደ ኮምፒውተር የሚያስገባ (Input)?</p>
+                <input type="radio" name="q7" value="1"> Scanner <br> <input type="radio" name="q7" value="0"> Speaker</div>
+            <div class="q-box"><p>8. ዌብ ሳይት ለመስራት የምንጠቀመው ቋንቋ?</p>
+                <input type="radio" name="q8" value="1"> HTML <br> <input type="radio" name="q8" value="0"> HTTP</div>
+            <div class="q-box"><p>9. በዓለም ትልቁ የኮምፒውተር ኔትወርክ?</p>
+                <input type="radio" name="q9" value="1"> Internet <br> <input type="radio" name="q9" value="0"> LAN</div>
+            <div class="q-box"><p>10. መረጃን በወረቀት ላይ የሚያትም?</p>
+                <input type="radio" name="q10" value="1"> Printer <br> <input type="radio" name="q10" value="0"> Plotter</div>
         </div>
-        <div class="question">
-            <p>2. መረጃን ለማተም የምንጠቀመው?</p>
-            <input type="radio" name="q2" value="1"> Printer <br>
-            <input type="radio" name="q2" value="0"> Mouse
-        </div>
-        <button onclick="finish()">ፈተናውን ጨርስ</button>
+        <button onclick="submitExam()">ፈተናውን ጨርስ</button>
     </div>
 
-    <div id="result-page" class="hidden">
-        <h2 id="score-text"></h2>
+    <div id="result-div" class="hidden">
+        <h2 id="final-score"></h2>
         <p>ውጤትዎ ለባለቤቱ ተልኳል!</p>
-        <form id="result-form" action="https://formspree.io/f/xjgobkeo" method="POST" style="display:none;">
-            <input type="hidden" name="Student" id="fName">
-            <input type="hidden" name="Mark" id="fScore">
+        <form id="res-form" action="https://formspree.io/f/xjgobkeo" method="POST" style="display:none;">
+            <input type="hidden" name="Name" id="f-name">
+            <input type="hidden" name="Result" id="f-score">
         </form>
-        <button onclick="location.reload()">ተመለስ</button>
+        <button onclick="location.reload()">ድጋሚ ፈተን</button>
     </div>
 </div>
 
 <script>
-    function start() {
-        if(document.getElementById('sName').value == "") return alert("ስም ያስገቡ!");
-        document.getElementById('start-page').classList.add('hidden');
-        document.getElementById('quiz-page').classList.remove('hidden');
+    function startExam() {
+        if(document.getElementById('student-name').value == "") return alert("እባክዎን ስም ያስገቡ!");
+        document.getElementById('start-div').classList.add('hidden');
+        document.getElementById('quiz-div').classList.remove('hidden');
     }
 
-    function finish() {
+    function submitExam() {
         let score = 0;
-        if(document.querySelector('input[name="q1"]:checked')?.value == "1") score++;
-        if(document.querySelector('input[name="q2"]:checked')?.value == "1") score++;
-
-        document.getElementById('quiz-page').classList.add('hidden');
-        document.getElementById('result-page').classList.remove('hidden');
-        document.getElementById('score-text').innerText = "ውጤትዎ: " + score + "/2";
-
-        // ውጤቱን መላክ
-        document.getElementById('fName').value = document.getElementById('sName').value;
-        document.getElementById('fScore').value = score + "/2";
-        document.getElementById('result-form').submit();
-
-        if(score == 2) confetti();
+        for(let i=1; i<=10; i++) {
+            let ans = document.querySelector(`input[name="q${i}"]:checked`);
+            if(ans && ans.value == "1") score++;
+        }
+        document.getElementById('quiz-div').classList.add('hidden');
+        document.getElementById('result-div').classList.remove('hidden');
+        document.getElementById('final-score').innerText = "ውጤትዎ: " + score + "/10";
+        
+        document.getElementById('f-name').value = document.getElementById('student-name').value;
+        document.getElementById('f-score').value = score + "/10";
+        document.getElementById('res-form').submit();
+        if(score >= 8) confetti();
     }
 </script>
 </body>
