@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>አይሲቲ ፈተና</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f4; text-align: center; padding: 20px; }
+        .exam-card { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input, button { width: 90%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; }
+        button { background: #1e3c72; color: white; cursor: pointer; font-weight: bold; }
+        .hidden { display: none; }
+        .question { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+<div class="exam-card">
+    <div id="start-page">
+        <h2>እንኳን ደህና መጡ!</h2>
+        <input type="text" id="sName" placeholder="ሙሉ ስምዎን ያስገቡ">
+        <button onclick="start()">ፈተናውን ጀምር</button>
+    </div>
+
+    <div id="quiz-page" class="hidden">
+        <div class="question">
+            <p>1. የኮምፒውተር አእምሮ የሚባለው የቱ ነው?</p>
+            <input type="radio" name="q1" value="1"> CPU <br>
+            <input type="radio" name="q1" value="0"> RAM
+        </div>
+        <div class="question">
+            <p>2. መረጃን ለማተም የምንጠቀመው?</p>
+            <input type="radio" name="q2" value="1"> Printer <br>
+            <input type="radio" name="q2" value="0"> Mouse
+        </div>
+        <button onclick="finish()">ፈተናውን ጨርስ</button>
+    </div>
+
+    <div id="result-page" class="hidden">
+        <h2 id="score-text"></h2>
+        <p>ውጤትዎ ለባለቤቱ ተልኳል!</p>
+        <form id="result-form" action="https://formspree.io/f/xjgobkeo" method="POST" style="display:none;">
+            <input type="hidden" name="Student" id="fName">
+            <input type="hidden" name="Mark" id="fScore">
+        </form>
+        <button onclick="location.reload()">ተመለስ</button>
+    </div>
+</div>
+
+<script>
+    function start() {
+        if(document.getElementById('sName').value == "") return alert("ስም ያስገቡ!");
+        document.getElementById('start-page').classList.add('hidden');
+        document.getElementById('quiz-page').classList.remove('hidden');
+    }
+
+    function finish() {
+        let score = 0;
+        if(document.querySelector('input[name="q1"]:checked')?.value == "1") score++;
+        if(document.querySelector('input[name="q2"]:checked')?.value == "1") score++;
+
+        document.getElementById('quiz-page').classList.add('hidden');
+        document.getElementById('result-page').classList.remove('hidden');
+        document.getElementById('score-text').innerText = "ውጤትዎ: " + score + "/2";
+
+        // ውጤቱን መላክ
+        document.getElementById('fName').value = document.getElementById('sName').value;
+        document.getElementById('fScore').value = score + "/2";
+        document.getElementById('result-form').submit();
+
+        if(score == 2) confetti();
+    }
+</script>
+</body>
+</html>
